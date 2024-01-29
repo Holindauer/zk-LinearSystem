@@ -38,7 +38,7 @@ As mentioned above, we are going to be using elliptic curve point addition over 
 Eliptic curves are a family of function of the form: $y^2 = x^3 + ax + b$
 
 <p align="center">
-  <img src="elipticCurve.png" alt="Description" style="width:50%">
+  <img src="imgs/elipticCurve.png" alt="Description" style="width:50%">
 </p>
 
 Above is a plot of $y^2 = x^3 + x + 9$ as well as $y=2+1.6x$.
@@ -46,7 +46,7 @@ Above is a plot of $y^2 = x^3 + x + 9$ as well as $y=2+1.6x$.
 The cool thing about eliptic curves is that if a line intersects two points, then it must intersect a third. With the exception of a verical line. Eliptic curve point addition is a binary operator that relates inputs of two points on the curve with the third point. To satisfy the abelian group rules, another point called the *point at infinity* is added to the set to enable the property of closure for vertical lines. The point at ininity is also the zero element. 
 
 <p align="center">
-  <img src="curvePointAddition.webp" alt="Description" style="width:50%">
+  <img src="imgs/curvePointAddition.webp" alt="Description" style="width:50%">
 </p>
 
 As well, the field is defined such that the third term is not the actual third connection point, but its reflection across the x axis. This is to allow the following algebraic manipulation to remain true:
@@ -60,7 +60,7 @@ $b =  \text{Inverse}(b)$
 For eliptic curve point addition under a finite field, we modulo by a prime. $y^2 = x^3 + ax + b$ (mod p). This makes the field cyclic and means $y$ will not exceed the modulus.
 
 <p align="center">
-  <img src="elipticCurveFiniteField.webp" alt="Description" style="width:50%">
+  <img src="imgs/elipticCurveFiniteField.webp" alt="Description" style="width:50%">
 </p>
 
 
