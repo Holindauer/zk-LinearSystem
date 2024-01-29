@@ -28,7 +28,7 @@ The set of $\mathbb{R}$ under the binary operators of addition and multiplicatio
 
 The zk implementation in this repo uses elliptic curve point addition over a finite field. $\leftarrow$ lets address the finite field part of that sentence: 
 
-A finite field, also called a Galois field, is a field with a finite number of elements. Integers modulo a prime number are an example of this. $\mathbb{Z}/\mathbb{pZ}=\{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11\}$ where p=11 can be likened to a clock face with hours from 0-11. By adding/multipying "hours" to a given field element, all field elements can be generated. That property makes $\mathbb{Z}/\mathbb{pZ}$ a *cyclic group* under each of its ops as well, because all field elements can be obtained by repeated applicated of the field operators to some  generator element $\mathbb{G}$.
+A finite field, also called a Galois field, is a field with a finite number of elements. Integers modulo a prime number are an example of this. $\mathbb{Z}/\mathbb{pZ}=\{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11\}$ where p=11 can be likened to a clock face with hours from 0-11. By adding/multipying "hours" to a given field element, all field elements can be generated. That property makes $\mathbb{Z}/\mathbb{pZ}$ a *cyclic group* under each of its ops as well, because all field elements can be obtained by repeated applicated of the field operators onto some  generator element $\mathbb{G}$.
 
 
 ## Eliptic Curve Point Addition Over a Finite Field
@@ -68,11 +68,13 @@ Above is a plot $y^2 = x^3+3$ (mod 23)
 
 ## Group Homomorphisms for a Zero Knowledge Proof
 
-As important note is that the two binary ops in our finite field are curve point addition and curve point multiplication (which is really just repeated curve point addition). Because we know the group is cyclic, this means that there is a homomorphism between adding two field elements together and adding together two generators $\mathbb{G}$ each multiplied by each input to the sum respectively. (Homomorphism is being used to mean that there is a "one way" preservation of information between two structures. In this case, the multiplicative structure. That is, it is easy to convert between one structure to another, but not the other way around). For example, with the set of all integers mod 11:
+An important note is that the two binary ops in our finite field are curve point addition and curve point multiplication (which is really just repeated curve point addition). Because we know the group is cyclic, this means that there is a homomorphism between adding two field elements together and adding together two generators $\mathbb{G}$ each multiplied by the scalar x value of those field elements respectively. (Homomorphism is being used to mean that there is a "one way" preservation of information between two structures. In this case, the multiplicative structure. That is, it is easy to convert between one structure to another, but not the other way around). For example, with the set of all integers mod 11:
 
-$5\mathbb{G} + 7\mathbb{G}$ (mod 11) is homomorphic to $\mathbb{5 + 7}$ (mod 11)
+$5\mathbb{G} + 7\mathbb{G}$ (mod 11) where $\mathbb{G}$ is 1, is homomorphic to $\mathbb{5 + 7}$ (mod 11) 
 
-We can construct a basic zero knowledge proof using elliptic curve cryptography by taking advantage of such homomorphisms. For example, if I want to prove to you that I know two secret numbers x and y that when added together equal 15, we can set up the following zk proof.
+This example is also an isomorphism (a two way preservation of information). But in order to construct a homomorphism for cryptography, it needs to be very difficult to inverse the homomorphism. 
+
+We can construct a basic zero knowledge proof using elliptic curve cryptography by taking advantage of such a homomorphism. For example, if I want to prove to you that I know two secret numbers x and y that when added together equal 15, we can set up the following zk proof.
 
 - Claim: "I know an $x$ and a $y$ such that  $x + y = 15$
 
