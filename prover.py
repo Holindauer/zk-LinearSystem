@@ -1,5 +1,5 @@
 from py_ecc.bn128 import G1, multiply, add
-from typing import List
+from typing import List, Tuple
 import numpy as np
 
 class Prover:
@@ -22,7 +22,8 @@ class Prover:
         # private solution
         self.__x_private = None
 
-    def makeClaim(self, A : np.ndarray, x : np.ndarray, b : np.ndarray):
+
+    def makeClaim(self, A : np.ndarray, x : np.ndarray, b : np.ndarray) -> None:
         '''
         makeClaim is where the prover makes the claim that they know a vector x
         that solves the system of equations Ax = b. 
@@ -36,7 +37,7 @@ class Prover:
         self.__x_private = x
 
 
-    def viewClaim(self):
+    def viewClaim(self) -> None:
         '''
         viewClaim is where the prover shows the verifier the claim they are making.
         '''
@@ -55,11 +56,21 @@ class Prover:
         print(")\n")
 
     
-    def makeProof(self, solution : List[int]):
-        pass
+    def makeProof(self) -> List:
+        '''
+        makeProof is where the private solution is converted into eliptic curve space. 
 
-    def elipticDotProduct(self):
+        The agreed upon protocol between the prover and the verifier is that the the proof made 
+        by this function (a vector of each x multiplied by the Generator) will be used in the 
+        Verifier class to compute the constant vector b of Ax=b in elliptic curve space. The verifier 
+        will do the public variable conversion, and the prover will do the private variable conversion.
+
+        If the computed product vector is equal to the constant vector b multiplied by the Generator,
+        then the verifier will know that the prover knows the solution to the system of equations.
         '''
-        This function will implement the dot product of two vectors in elliptic curve space.
-        '''
-        pass
+        
+        # multiply each x by the Generator into a tuple
+        return [multiply(G1, x) for x in self.__x_private]
+
+
+

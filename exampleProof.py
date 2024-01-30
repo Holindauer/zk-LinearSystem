@@ -1,5 +1,12 @@
 from py_ecc.bn128 import G1, multiply, add
 
+"""
+This script is a simple example of a zk proof that uses the eliptic curve group homomorphism 
+being implemented using the py_ecc library
+
+It was taken from chapter 5 of https://www.rareskills.io/zk-book
+"""
+
 # Claim: x + y == 15
 
 # Prover
