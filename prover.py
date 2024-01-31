@@ -58,7 +58,7 @@ class Prover:
     
     def makeProof(self) -> List:
         '''
-        makeProof is where the private solution is converted into eliptic curve space. 
+        makeProof() is where the private solution is converted into eliptic curve space. 
 
         The agreed upon protocol between the prover and the verifier is that the the proof made 
         by this function (a vector of each x multiplied by the Generator) will be used in the 

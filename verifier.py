@@ -15,43 +15,34 @@ class Verifier:
 
     def verify(self, proof : List, A : np.ndarray, b : np.ndarray) -> bool:
         '''
-        This function will verify that the prover knows the solution to the system of equations
+        @notice This function will verify that the prover knows the solution to the system of equations
         without revealing the actual solution.
 
-        It accepts the proof from and public variables A and b from the
-        Prover class.
+        @dev elipticDotProduct() is used to validate the proof. If the eliptic dot product of the proof 
+        matches the constant vector b (each term multiplied represented the generator multiplied by each 
+        elment) then the private solution has the property that Ax = b.
 
-        The proof will be a tuple of tuples, where each tuple is a point in eliptic curve space.
-        Verifications is done by check that the eliptic curve converted A and x multiplied together
-        equal the eliptic curve converted b.
+        @param It accepts the proof  and public variables A and b from the Prover class.
+        (a list of eliptic curve points that are each the generator added itself the amount
+        of times as the actual values)
         ''' 
 
         # check dimensions
-        assert A.shape[0] == b.shape[0], "A and b must have same number of rows"
+        assert A.shape[0] == len(b), "A and b must have same number of rows"
         assert A.shape[1] == len(proof), "A and x must have same number of columns"
+
+        # save num rows and cols
+        num_rows = A.shape[0]
 
         # Convert A and b to list of ints
         A = [[int(col) for col in row] for row in A]
         b = [int(row) for row in b]
 
-        print(A)
-        print(b)
-
-        # The the eliptic version of A must match the points in this list
+        # The the Ax must match the points in this list when represented as eliptic curve points
         elipticB : List = [multiply(G1, row) for row in b]
 
-        
-        # compute the dot product of the rows of elipticA and proof using eliptic curve point addition/multiplication
-        computedElipticB : List = []
-
-        # dot product for each row of A with the proof
-        for row in range(A.shape[0]):
-        
-            # compute dot product
-            dot = self.elipticDotProduct(A[row], proof)
-
-            # add to list
-            computedElipticB.append(dot)
+        # compute the dot product for each row in A with the proof
+        computedElipticB : List = [self.elipticDotProduct(proof, A[row]) for row in range(num_rows)]
 
 
         print(computedElipticB)
@@ -60,7 +51,6 @@ class Verifier:
         for i in range(len(computedElipticB)):
             if computedElipticB[i] != elipticB[i]:
                 return False
-
             
         return True    
     

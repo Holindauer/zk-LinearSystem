@@ -71,36 +71,29 @@ def test_ElipticDotProduct(A : np.ndarray, x : np.ndarray, b : np.ndarray):
     assert elipticDot == normalDot_G, "Eliptic dot product is invalid"
 
 
+def test_ValidProof(A : np.ndarray, x : np.ndarray, b : np.ndarray):
+    '''
+    test_ValidProof tests the process of commiting a private solution to a system of equations
+    and then verifying that the prover knows the solution to the system of equations without
+    revealing the actual solution using the Verifier class.
+    '''
 
+    # ensure system is consistent
+    require_ConsistentSystem(A, x, b)
 
+    # instantiate prover and verifier
+    prover = Prover()
+    verifier = Verifier()
 
+    # make claim
+    prover.makeClaim(A, x, b)
 
-# def test_ValidProof(A : np.ndarray, x : np.ndarray, b : np.ndarray):
-#     '''
-#     Test valid proof tests the process of commiting a private solution to a system of equations
-#     and then verifying that the prover knows the solution to the system of equations without
-#     revealing the actual solution using the Verifier class.
-#     '''
+    # make proof
+    proof = prover.makeProof()
 
-#     # test if system is consistent
-#     require_ConsistentSystem(A, x, b)
-
-#     # instantiate prover and verifier
-#     prover = Prover()
-#     verifier = Verifier()
-
-#     # make claim
-#     prover.makeClaim(A, x, b)
-
-#     # view claim
-#     prover.viewClaim()
-
-#     # make proof
-#     proof = prover.makeProof()
-
-#     # verify proof
-#     verified = verifier.verify(proof, A, b)
-#     assert verified, "Proof is invalid"
+    # verify proof
+    verified = verifier.verify(proof, A, b)
+    assert verified, "Proof is invalid"
 
 
 
@@ -128,8 +121,7 @@ if __name__ == "__main__":
     require_ConsistentSystem(A_consistent, x_consistent, b_consistent)
     test_makeProof(A_consistent, x_consistent, b_consistent)
     test_ElipticDotProduct(A_consistent, x_consistent, b_consistent)
-
-    # test_ValidProof(A_consistent, x_consistent, b_consistent)
+    test_ValidProof(A_consistent, x_consistent, b_consistent)
 
     
     print("Tests Passed!")
