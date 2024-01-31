@@ -44,9 +44,6 @@ class Verifier:
         # compute the dot product for each row in A with the proof
         computedElipticB : List = [self.elipticDotProduct(proof, A[row]) for row in range(num_rows)]
 
-
-        print(computedElipticB)
-
         # check if the computed eliptic curve points are equal to the eliptic curve points of b
         for i in range(len(computedElipticB)):
             if computedElipticB[i] != elipticB[i]:
